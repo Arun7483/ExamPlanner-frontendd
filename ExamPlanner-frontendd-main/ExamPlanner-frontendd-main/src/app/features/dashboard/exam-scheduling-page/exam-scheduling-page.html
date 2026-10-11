@@ -1,0 +1,34 @@
+<div class="box1">
+    <h2>Exam Schedules Tab</h2>
+    <p-table [value]="schedules()" [tableStyle]="{ 'min-width': '50rem'}">
+    <ng-template #caption>
+        <div class="action_tab">
+        <p-button styleClass="schedule_button" (click)="navigateToExamScheduleForm()">Create New Schedule</p-button>
+        </div>
+        
+
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th>Schedule ID</th>
+            <th>Exam Name</th>
+            <th>Date & Time</th>
+            <th>Duration</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-schedule>
+        <tr>
+        <td>{{ schedule.id }}</td>
+        <td>{{ schedule.course?.name }}</td>
+        <td>{{ schedule.examDate }} | {{ schedule.startTime }} - {{ schedule.endTime }}</td>
+        <td>{{ schedule.durationMinutes }} min</td>
+        <td>
+            <button class="action-btn delete" (click)="deleteSchedule(schedule.id)">
+                <i class="pi pi-trash"></i>
+            </button>
+        </td>
+        </tr>
+    </ng-template>
+    </p-table>
+</div>

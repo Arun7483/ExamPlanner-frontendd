@@ -1,0 +1,66 @@
+.landing-container {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a73e8; 
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  min-height: 65vh;
+  gap: 4rem;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.tagline {
+  font-size: 1.25rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+
+.cta-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 4rem 0;
+  border-top: 1px solid #eee;
+}
+
+.feature-card i {
+  font-size: 2rem;
+  color: #1a73e8;
+  margin-bottom: 1rem;
+}

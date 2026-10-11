@@ -1,0 +1,120 @@
+<p-card>
+  <div class="page_header">
+    <h2>Seating Halls</h2>
+  </div>
+
+  <p-toolbar class="cla">
+    <div class="action-bar">
+      <div class="search-box">
+        <i class="pi pi-search"></i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Search Hall..."
+          (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+      </div>
+
+      <div class="p-toolbar-groupicon-right">
+        <p-button label="Import CSV" severity="help"></p-button>
+
+        <button
+          pButton
+          label="Add Hall"
+          icon="pi pi-plus"
+          severity="info"
+          (click)="openAddDialog()">
+        </button>
+      </div>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="halls()"
+    [paginator]="true"
+    [rows]="5"
+    [globalFilterFields]="['hallId','capacity','floor','availability']">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Hall ID</th>
+        <th>Seats</th>
+        <th>Floor</th>
+        <th>Availability</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-hall let-i="rowIndex">
+      <tr>
+        <td>{{ hall.hallId }}</td>
+        <td>{{ hall.capacity }}</td>
+        <td>{{ hall.floor }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'text-success': hall.availability === 'YES',
+              'text-danger': hall.availability === 'NO'
+            }">
+            {{ hall.availability }}
+          </span>
+        </td>
+        <td>
+          <button pButton icon="pi pi-pencil" class="p-button-text" (click)="editHall(hall)"></button>
+          <button pButton icon="pi pi-trash" class="p-button-text p-button-danger" (click)="deleteHall(hall)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    [header]="editingHallId ? 'Edit Hall' : 'Add Hall'"
+    [(visible)]="showAddDialog"
+    [modal]="true"
+    [style]="{ width: '420px' }"
+    [draggable]="false"
+    [resizable]="false">
+
+    <form [formGroup]="HallPageForm" class="hall-form" (ngSubmit)="saveHall()">
+      <div class="form-field">
+        <label>Hall ID</label>
+        <input
+          pInputText
+          formControlName="hallId"
+          [disabled]="!!editingHallId"
+           />
+        <small class="p-error" *ngIf="hasError('hallId','required')">Hall ID is required.</small>
+        <small class="p-error" *ngIf="hasError('hallId','pattern')">
+          
+          Only digits allowed.
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label>Capacity</label>
+        <input pInputText formControlName="capacity"/>
+        <small class="p-error" *ngIf="hasError('capacity','required')">Capacity is required.</small>
+        <small class="p-error" *ngIf="hasError('capacity','pattern')">Capacity must be a valid number.</small>
+      </div>
+
+      <div class="form-field">
+        <label>Floor</label>
+        <input pInputText formControlName="floor" />
+        <small class="p-error" *ngIf="hasError('floor','required')">Floor is required.</small>
+      </div>
+
+      <div class="form-field">
+        <label>Availability</label>
+        <select formControlName="availability">
+          <option [ngValue]="'YES'">Yes</option>
+          <option [ngValue]="'NO'">No</option>
+        </select>
+        <small class="p-error" *ngIf="hasError('availability','required')">Availability is required.</small>
+      </div>
+      <div class="dialog-actions" style="display:flex; justify-content:flex-end; gap: .5rem; margin-top: 1rem;">
+        <button pButton type="button" label="Cancel" class="p-button-text" (click)="showAddDialog = false"></button>
+        <button pButton type="submit" label="Save" class="p-button-primary" [disabled]="HallPageForm.invalid"></button>
+      </div>
+    </form>
+  </p-dialog>
+</p-card>

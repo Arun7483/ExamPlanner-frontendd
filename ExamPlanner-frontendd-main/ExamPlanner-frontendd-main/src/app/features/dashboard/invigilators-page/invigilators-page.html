@@ -1,0 +1,114 @@
+<p-card>
+    <div class="page-header"`>
+        <h2>Invigilator</h2>
+    </div>
+
+    <p-toolbar class="clas">
+        <div class="action-bar">
+      <div class="search-box">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Search student..." (input)="dt.filterGlobal($any($event.target).value, 'contains')">
+        </div>
+        <div class="p-toolbar-groupicon-right">
+            <p-button class="btn-import" severity="help"><i class="pi pi-file-import"></i> Import CSV</p-button>
+            <button
+            pButton
+            label="Add Invigilator"
+            icon="pi pi-plus"
+            severity="info"
+            class="p-button primary"
+            (click)="openAddDialog()">
+        </button>
+        </div>
+        </div>
+    </p-toolbar>
+
+    <p-table #dt [value]="Invigilators()" [paginator]="true" [rows]="5" [responsiveLayout]="'scroll'">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Invigilator ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th style="width: 120px;">Action</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-inv>
+            <tr>
+                <td>{{inv.invigilatorId}}</td>
+                <td>{{inv.name}}</td>
+                <td>{{inv.department?.name || 'N/A'}}</td>
+                <td>{{inv.email}}</td>
+                <td>{{inv.phone || 'N/A'}}</td>
+                <td>
+                    <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm" (click)="editInvigilator(inv)"></button>
+                    <button pButton icon="pi pi-trash" class="p-button-text p-button-danger" (click)="deleteInvigilator(inv)"></button>
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    
+<p-dialog
+  header="Add Invigilator"
+  [(visible)]="showAddDialog"
+  [modal]="true"
+  [style]="{ width: '400px' }"
+  >
+  <form [formGroup]="InvigilatorForm" class="p-fluid">
+    <div class="p-field form-field">
+      <label>Invigilator ID</label>
+      <input pInputText formControlName="invigilatorId" />
+      <small class="p-error" *ngIf="hasError('invigilatorId','required')">
+        Invigilator ID is required.
+    </small>
+    <small class="p-error" *ngIf="hasError('invigilatorId','pattern')">
+        Invigilator ID must contain only digits.
+    </small>
+    </div>
+
+    <div class="p-field form-field">
+      <label>Name</label>
+      <input pInputText formControlName="name" />
+      <small class="p-error" *ngIf="hasError('name','required')">
+        Name is required.
+      </small>
+      
+    </div>
+
+    <div class="p-field form-field">
+      <label>Department</label>
+      <select id="department" formControlName="department" class="custom-dropdown">
+      <option value="">Select Department</option>
+      <option *ngFor="let dept of departments()" [value]="dept.departmentCode">
+        {{ dept.departmentCode }} - {{ dept.name }}
+      </option>
+    </select>
+
+       <small class="p-error" *ngIf="hasError('department','required')">
+        Department is required.
+      </small>
+    </div>
+
+    <div class="p-field form-field">
+      <label>Email</label>
+      <input pInputText formControlName="email" />
+      <small class="p-error" *ngIf="hasError('email','email')">
+         Please enter a valid email.
+      </small>
+    </div>
+
+    <div class="p-field form-field">
+      <label>Phone Number</label>
+      <input pInputText formControlName="phone" />
+      <small class="p-error" *ngIf="hasError('phone','required')">
+         Phone is required.
+      </small>
+    </div>
+    <p-button severity="info" (click)="saveInvigilator()">Save</p-button>
+  </form>
+</p-dialog>
+
+</p-card>

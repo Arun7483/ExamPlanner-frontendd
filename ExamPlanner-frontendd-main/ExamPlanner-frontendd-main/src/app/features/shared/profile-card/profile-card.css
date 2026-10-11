@@ -1,0 +1,129 @@
+
+.profile-card {
+  position: relative;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px var(--shadow);
+  overflow: hidden;
+  max-width: 720px;
+  margin: 24px auto;
+  border: 1px solid var(--border);
+}
+
+/* Decorative cover band */
+.profile-cover {
+  height: 96px;
+  background: linear-gradient(135deg, var(--primary) 0%, #6ec1ff 100%);
+  opacity: 0.9;
+}
+
+/* Main area: avatar + identity */
+.profile-main {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: 96px 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 20px;
+  margin-top: -48px; /* pull above the cover for an overlapping avatar effect */
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--surface);
+  box-shadow: 0 8px 20px var(--shadow);
+  display: grid;
+  place-items: center;
+}
+
+.avatar .pi {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+/* Identity info */
+.identity {
+  display: grid;
+  gap: 6px;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.25;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary);
+  background: var(--primary-50);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.email {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Meta grid */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 10px 20px 18px;
+  border-top: 1px dashed var(--border);
+  background: var(--surface-2);
+}
+
+.meta-item i{
+  color: green;
+}
+.meta-item {
+  display: grid;
+  gap: 4px;
+}
+
+.meta-item .label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.meta-item .value {
+  color: var(--text);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-item .value.online {
+  color: var(--success);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 20px 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+}

@@ -1,0 +1,154 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">EXAMPLANNER</div>
+    <nav>
+      <a class="menu-item" [class.active]="activeView === 'dashboard'" (click)="setView('dashboard')">Dashboard</a>
+      <a class="menu-item" [class.active]="activeView === 'attendance'" (click)="setView('attendance')">Attendance</a>
+      <a class="menu-item" [class.active]="activeView === 'reports'" (click)="setView('reports')">Reports</a>
+      <a class="menu-item" (click)="logout()">Logout</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="main-header">
+      <h2 class="welcome-title">WELCOME BACK, {{ profileData?.name || 'Invigilator' }}</h2>
+      <h5 class="current-date">{{ today | date:'fullDate' }}</h5>
+    </div>
+
+    <div *ngIf="activeView === 'dashboard'">
+      <section class="card">
+        <h6>Latest Notifications</h6>
+        <div class="notifications-list">
+          <div *ngFor="let notification of notifications" class="notification-item">
+            <div class="notification-title">{{ notification.title }}</div>
+            <div class="notification-message">{{ notification.message }}</div>
+            <div class="notification-date">{{ notification.date }}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h6>Upcoming Examinations</h6>
+        <div class="exams-table">
+          <div *ngFor="let exam of upcomingExams" class="exam-row">
+            <div class="exam-course">{{ exam.course }}</div>
+            <div class="exam-date">{{ exam.date }} {{ exam.time }}</div>
+            <div class="exam-venue">{{ exam.venue }}</div>
+            <div class="exam-students">{{ exam.students }} students</div>
+            <button class="view-plan-btn" (click)="viewPlan(exam)">View Plan</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    
+<div *ngIf="activeView === 'attendance'">
+<section class="card">
+<h6>Today’s Exams</h6>
+<div class="exams-table">
+<div class="exam-row"
+          *ngFor="let exam of todayExams"
+          (click)="openExam(exam)">
+<div class="exam-course">{{ exam.course }}</div>
+<div class="exam-date">{{ exam.time }}</div>
+<div class="exam-venue">{{ exam.venue }}</div>
+</div>
+</div>
+</section>
+<!-- STUDENT ATTENDANCE -->
+<section class="card" *ngIf="selectedExam">
+<h6>Attendance – {{ selectedExam.course }}</h6>
+<table width="100%">
+<tr>
+<th>Student ID</th>
+<th>Name</th>
+<th>Present</th>
+</tr>
+<tr *ngFor="let s of attendanceStudents">
+<td>{{ s.id }}</td>
+<td>{{ s.name }}</td>
+<td>
+<input type="checkbox" [(ngModel)]="s.present">
+</td>
+</tr>
+</table>
+<br>
+<button pButton
+ label="Save Attendance"
+ icon="pi pi-check"
+ class="p-button-primary"
+ (click)="saveAttendance()">
+</button>
+</section>
+</div>
+
+    <div *ngIf="activeView === 'reports'">
+      <section class="card">
+        <h6>Today's Exams - Reports</h6>
+        <div class="exams-table">
+          <div class="exam-row"
+               *ngFor="let exam of todayExams"
+               (click)="openExamReport(exam)"
+               style="cursor: pointer;">
+            <div class="exam-course">{{ exam.course }}</div>
+            <div class="exam-date">{{ exam.time }}</div>
+            <div class="exam-venue">{{ exam.venue }}</div>
+            <button class="view-plan-btn">Submit Report</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- REPORTS MODAL -->
+    <p-dialog 
+      [(visible)]="displayReportModal" 
+      [header]="'Exam Report - ' + (selectedExamReport?.course || '')"
+      [modal]="true"
+      [style]="{width: '100%', maxWidth: '1000px'}"
+      (onHide)="closeReportModal()">
+      
+      <div *ngIf="selectedExamReport" class="report-modal-content">
+        <table width="100%" class="report-table">
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Status</th>
+              <th>Malpractice</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of reportStudents">
+              <td>{{ s.id }}</td>
+              <td>{{ s.name }}</td>
+              <td>
+                <select [(ngModel)]="s.status" class="table-select">
+                  <option value="Present">Present</option>
+                  <option value="Absent">Absent</option>
+                </select>
+              </td>
+              <td style="text-align: center;">
+                <input type="checkbox" [(ngModel)]="s.is_practice">
+              </td>
+              <td>
+                <input 
+                  type="text" 
+                  [(ngModel)]="s.reason" 
+                  placeholder="Remarks..." 
+                  class="table-input"
+                  [disabled]="!s.is_practice">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text" (click)="closeReportModal()"></button>
+        <button pButton label="Save Report" icon="pi pi-check" class="p-button-success" (click)="saveReport()"></button>
+      </ng-template>
+    </p-dialog>
+  </main>
+</div>

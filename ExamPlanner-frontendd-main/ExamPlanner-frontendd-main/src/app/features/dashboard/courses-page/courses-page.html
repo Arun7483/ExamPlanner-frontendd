@@ -1,0 +1,93 @@
+<div class="page-wrapper">
+  <app-management-table 
+    [title]="'Course Management'"
+    [columns]="tableColumns"
+    [data]="courses()"
+    (onAdd)="showAddDialog()"
+    (onEdit)="editCourse($event)"
+    (onDelete)="deleteCourse($event)">
+  </app-management-table>
+
+  <p-dialog 
+    [header]="isEditing() ? 'Edit Course Details' : 'Register New Course'" 
+    [visible]="displayModal()" 
+    [modal]="true"
+    (onHide)="closeDialog()"
+    [style]="{width: '600px'}">
+    
+    <form [formGroup]="courseForm" (ngSubmit)="saveCourse()">
+      
+      <div *ngIf="errorMessage()" style="color: #dc2626; margin-bottom: 1rem; background: #fef2f2; padding: 12px; border: 1px solid #fca5a5; border-radius: 6px; border-left: 4px solid #dc2626;">
+        <i class="pi pi-exclamation-circle"></i> {{errorMessage()}}
+      </div>
+
+      <div class="grid-form">
+        <div class="field">
+          <label>COURSE NAME *</label>
+          <input type="text" pInputText formControlName="name" placeholder="Enter course name">
+          <small class="error" *ngIf="courseForm.get('name')?.hasError('required') && courseForm.get('name')?.touched">
+            Course Name is required
+          </small>
+          <small class="error" *ngIf="courseForm.get('name')?.hasError('minlength') && courseForm.get('name')?.touched">
+            Course Name must be at least 3 characters
+          </small>
+        </div>
+
+        <div class="field">
+          <label>COURSE ID *</label>
+          <input type="text" pInputText formControlName="id" [readonly]="isEditing()" placeholder="E.G. CS101">
+          <small class="error" *ngIf="courseForm.get('id')?.hasError('required') && courseForm.get('id')?.touched">
+            Course ID is required
+          </small>
+          <small class="error" *ngIf="courseForm.get('id')?.hasError('minlength') && courseForm.get('id')?.touched">
+            Course ID must be at least 4 characters
+          </small>
+        </div>
+
+        <div class="field">
+          <label>CREDITS *</label>
+          <select formControlName="credits" class="custom-select">
+            <option value="" disabled>Select Credits</option>
+            <option *ngFor="let n of ['1','2','3','4','5']" [value]="n">{{n}}</option>
+          </select>
+          <small class="error" *ngIf="courseForm.get('credits')?.hasError('required') && courseForm.get('credits')?.touched">
+            Credits is required
+          </small>
+        </div>
+
+        <div class="field">
+          <label>DEPARTMENT *</label>
+          <select formControlName="department" class="custom-select" (change)="onDepartmentChange()">
+            <option value="" disabled>Select Department</option>
+            <option *ngFor="let dept of departments()" [value]="dept.departmentCode">
+              {{dept.departmentCode}} - {{dept.name}}
+            </option>
+          </select>
+          <small class="error" *ngIf="courseForm.get('department')?.hasError('required') && courseForm.get('department')?.touched">
+            Department is required
+          </small>
+        </div>
+
+        <div class="field">
+          <label>SEMESTER *</label>
+          <select formControlName="semester" class="custom-select">
+            <option value="" disabled>
+              {{ semesterOptions().length === 0 ? 'Select a Department first' : 'Select Semester' }}
+            </option>
+            <option *ngFor="let sem of semesterOptions()" [value]="sem">
+              Semester {{sem}}
+            </option>
+          </select>
+          <small class="error" *ngIf="courseForm.get('semester')?.hasError('required') && courseForm.get('semester')?.touched">
+            Semester is required
+          </small>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top: 2rem; text-align: right;">
+        <button type="button" pButton label="Cancel" class="p-button-text" (click)="closeDialog()"></button>
+        <button type="submit" pButton [label]="isEditing() ? 'Update' : 'Register'" [disabled]="courseForm.invalid"></button>
+      </div>
+    </form>
+  </p-dialog>
+</div>

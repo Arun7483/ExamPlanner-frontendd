@@ -1,0 +1,55 @@
+<div class="management-card">
+  <div class="card-header">
+    <div class="title-area">
+      <h1>{{ title }}</h1>
+    </div>
+  </div>
+
+  <div class="search-section">
+    <div class="search-box">
+      <i class="pi pi-search"></i>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Search by name or ID...">
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" (click)="onAdd.emit()">
+        <i class="pi pi-plus"></i> Add {{ title.replace(' Management', '') }}
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th *ngFor="let col of columns">{{ col.label }}</th>
+          <th class="text-right">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of filteredData; let i = index">
+          <td *ngFor="let col of columns">
+            <span *ngIf="col.isBadge" class="sem-badge">{{ row[col.key] }}</span>
+            <span *ngIf="!col.isBadge" [class.id-col]="col.key === 'id'">{{ row[col.key] }}</span>
+          </td>
+          <td class="text-right">
+            <button class="action-btn edit" (click)="onEdit.emit(row)">
+              <i class="pi pi-pencil"></i>
+            </button>
+            <button class="action-btn delete" (click)="onDelete.emit(row)">
+              <i class="pi pi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-container">
+    <button class="page-btn"><i class="pi pi-angle-double-left"></i></button>
+    <button class="page-btn"><i class="pi pi-angle-left"></i></button>
+    <div class="page-number">1</div>
+    <button class="page-btn"><i class="pi pi-angle-right"></i></button>
+    <button class="page-btn"><i class="pi pi-angle-double-right"></i></button>
+  </div>
+</div>

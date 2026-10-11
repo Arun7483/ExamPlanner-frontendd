@@ -1,0 +1,33 @@
+  <section class="profile-card" aria-label="User profile">
+    <!-- Cover/Header band -->
+    <div class="profile-cover"></div>
+
+    <!-- Avatar + Basic Info -->
+    <div class="profile-main">
+      <div class="avatar">
+        <i class="pi pi-user"></i>
+      </div>
+
+      <div class="identity">
+        <h2 class="name">{{ profile()?.name || 'Guest User' }}</h2>
+        <span class="role-badge">
+          <i class="pi pi-shield"></i>
+          {{ (profile()?.role || 'ADMIN') }}
+        </span>
+        <p class="email">
+          <i class="pi pi-envelope"></i>
+          {{ profile()?.email || 'guest@example.com' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="label">Status</span>
+        <span class="value online">
+          <i class="pi pi-circle-on"></i> Active
+        </span>
+      </div>
+     
+    </div>
+  </section>

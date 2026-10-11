@@ -1,0 +1,44 @@
+.box1 {
+    margin: 10px;
+}
+
+.status_live {
+    display: flex;
+    font-weight: 500;
+    background-color: rgb(80, 255, 89);
+    padding: 4px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.status_draft {
+    display: flex;
+    color: white;
+    font-weight: 500;
+    background-color: grey;
+    padding: 4px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.action_tab {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+.action-btn { 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+  padding: 8px; 
+  font-size: 18px; 
+}
+.edit { color: green; }
+.delete { color: #ef4444; }
+
+:host ::ng-deep .p-button.schedule_button {
+    background-color: var(--primary-color);
+
+}

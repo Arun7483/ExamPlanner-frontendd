@@ -1,0 +1,286 @@
+.header {
+    background-color: rgb(34, 30, 30);
+    height: 80px;
+    width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0 15px;
+}
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 20px;
+}
+.title {
+    font-weight: 700;
+    color: white;
+    font-size: 1rem;
+    padding: 10px;
+}
+
+.action_buttons {
+    padding-right: 30px;
+}
+
+:host ::ng-deep .p-button.user_profile_button {
+    color: white;
+    border: none;
+}
+
+:host ::ng-deep .p-button.user_profile_button:hover{
+    background-color: #ffffff;
+    color: black;
+}
+
+:host ::ng-deep .p-button.logout_button {
+    margin-left: 10px;
+    color: var(--error-color);
+    border: none;
+}
+
+:host ::ng-deep .p-button.logout_button:hover {
+    margin-left: 10px;
+    background-color: var(--error-color);
+    color: white;
+}
+
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+}
+
+.desktop-sidebar {
+    padding: 30px 10px;
+    position: sticky;
+    top: 0;
+    height: 88vh;
+    flex-shrink: 0;
+    width: 250px;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #333;
+}
+
+.lower-container {
+    flex-grow:1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+:host ::ng-deep .mobile-menu-btn {
+    padding: 10px;
+    display: none !important;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+:host ::ng-deep .mobile-menu-btn .p-button-icon {
+    font-size: 1.2rem;
+}
+
+:host ::ng-deep .mobile-menu-btn:hover {
+    background-color:  rgb(34, 30, 30);
+}
+
+:host ::ng-deep .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    color: rgb(34, 30, 30);
+    padding: 15px !important;
+}
+
+:host ::ng-deep .nav-link:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.page-body {
+    padding: 20px;
+    background-color: #f9fafb;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+@media (max-width: 992px) {
+    .desktop-sidebar{
+        display: none;
+    }
+
+    :host ::ng-deep .mobile-menu-btn {
+        display: block !important;
+    }
+}
+
+
+/* Base colors: adjust to match your brand/theme */
+:root {
+  --surface: #ffffff;
+  --surface-2: #f6f7fb;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --primary: #007ad9;     /* PrimeNG blue */
+  --primary-50: #e6f2ff;
+  --success: #16a34a;
+  --danger: #ef4444;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --border: #e5e7eb;
+}
+
+/* Dark theme support (optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #0f172a;
+    --surface-2: #111827;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --primary: #60a5fa;
+    --primary-50: #1e3a8a;
+    --shadow: rgba(0, 0, 0, 0.5);
+    --border: #1f2937;
+  }
+}
+
+.profile-card {
+  position: relative;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px var(--shadow);
+  overflow: hidden;
+  max-width: 720px;
+  margin: 24px auto;
+  border: 1px solid var(--border);
+}
+
+/* Decorative cover band */
+.profile-cover {
+  height: 96px;
+  background: linear-gradient(135deg, var(--primary) 0%, #6ec1ff 100%);
+  opacity: 0.9;
+}
+
+/* Main area: avatar + identity */
+.profile-main {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 20px;
+  margin-top: -48px; /* pull above the cover for an overlapping avatar effect */
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--surface);
+  box-shadow: 0 8px 20px var(--shadow);
+  display: grid;
+  place-items: center;
+}
+
+.avatar .pi {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+/* Identity info */
+.identity {
+  display: grid;
+  gap: 6px;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.25;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary);
+  background: var(--primary-50);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.email {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Meta grid */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 10px 20px 18px;
+  border-top: 1px dashed var(--border);
+  background: var(--surface-2);
+}
+
+.meta-item i{
+  color: green;
+}
+.meta-item {
+  display: grid;
+  gap: 4px;
+}
+
+.meta-item .label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.meta-item .value {
+  color: var(--text);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-item .value.online {
+  color: var(--success);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 20px 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+}

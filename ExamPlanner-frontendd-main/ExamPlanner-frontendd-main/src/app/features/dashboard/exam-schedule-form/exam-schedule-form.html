@@ -1,0 +1,162 @@
+<div>
+    <h2>Exam Scheduling Engine</h2>
+    <p>Create exam schedules with date, hall, and invigilator assignments</p>
+
+    <form [formGroup]="form">
+    <p-stepper [value]="activeStep()" class="basis-[50rem]" [linear]="true">
+        <p-step-list>
+            <p-step [value]="1">Details</p-step>
+            <p-step [value]="2">Time</p-step>
+            <p-step [value]="3">Hall</p-step>
+            <p-step [value]="4">Invigilator</p-step>
+        </p-step-list>
+        <p-step-panels>
+            <!-- Step 1: Department, Semester, Course -->
+            <p-step-panel [value]="1">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="card">
+                        <div class="input_div">
+                            <label>Select Department</label>
+                            <select class="department_field" formControlName="department" (change)="onDepartmentOrSemesterChange()">
+                                <option value="">-- Select Department --</option>
+                                    @for (d of departments(); track d.departmentCode) {
+                                        <option [value]="d.departmentCode">{{ d.name }}</option>
+                                    }
+                            </select>
+                        </div>
+                        <div class="sem_course_field">
+                            <div class="input_div">
+                                <label>Select Semester</label>
+                                <select class="semester_field" formControlName="semester" (change)="onDepartmentOrSemesterChange()">
+                                    <option value="">-- Select Semester --</option>
+                                    <ng-container *ngFor="let s of semesters">
+                                        <option [value]="s">{{ s }}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                            <div class="input_div">
+                                <label>Select Course</label>
+                                <select class="course_field" formControlName="course" (change)="onCourseSelected()">
+                                    <option value="">-- Select Course --</option>
+                                        @for (c of courses(); track c.id) {
+                                            <option [value]="c.id">{{ c.name }}</option>
+                                        }
+                                </select>
+                            </div>
+                        </div>
+                        @if(totalStudents() > 0 && selectedCourseId()){
+                        <h3 >Total Students : {{ totalStudents() }}</h3>   
+                        }
+                        @else if (totalStudents() == 0 && selectedCourseId()){
+                            <div class="error-message" style="color: red; font-weight: bold; margin-top: 10px;">
+                                ⚠️ Cannot schedule exam: There are 0 students enrolled.
+                            </div>
+                        }
+                        <div class="navigate_buttons">
+                            <div></div>
+                            <p-button label="Next" [disabled]="!selectedCourseId() || totalStudents() <=0" icon="pi pi-arrow-right" iconPos="right" styleClass="next_button" (onClick)="navigate(2)"></p-button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-step-panel>
+            <!-- Step 2: Date, Time, Duration -->
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="card">
+                        <div class="input_div">
+                            <label>Select Date</label>
+                            <p-datepicker formControlName="examDate" [showIcon]="true" inputId="buttondisplay" [showOnFocus]="false" [inputStyle]="{'width': '100%'}" />
+                        </div>
+                        <div class="sem_course_field">
+                            <div class="input_div">
+                                <label>Exam Start Time</label>
+                                <p-datepicker formControlName="startTime" [showIcon]="true" [iconDisplay]="'input'" [timeOnly]="true" hourFormat="12" inputId="calendar-12h" [showOnFocus]="false" [inputStyle]="{'width': '100%'}" >
+                                    <ng-template #inputicon let-clickCallBack="clickCallBack">
+                                        <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
+                                    </ng-template>
+                                </p-datepicker>
+                            </div>
+                            <div class="input_div">
+                                <label>Select Duration</label>
+                                <p-select formControlName="duration" [options]="duration" optionLabel="label" placeholder="Select Exam Duration">
+                                </p-select>
+                            </div>
+                        </div>
+                        <div *ngIf="conflictMessage()" class="input_div" style="color: red; margin-bottom: 1rem;">
+                            {{ conflictMessage() }}
+                        </div>
+                        <div class="navigate_buttons">
+                            <p-button icon="pi pi-arrow-left" label="Back" styleClass="back_button" (onClick)="navigate(1)"></p-button>
+                            <p-button icon="pi pi-arrow-right" label="Next" iconPos="right" styleClass="next_button" (onClick)="checkStudentConflicts(3)"></p-button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-step-panel>
+            <!-- Step 3: Hall Selection -->
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="card">
+                        <h3>Select Exam Hall</h3>
+                        <p class="progress-label">{{ capacityStatus }}</p>
+                        <div class="progress-section">
+                            <p-progressBar [value]="examCapacityPercentage" [showValue]="true" [styleClass]="examCapacityPercentage >= 100 ? 'capacity-full' : ''"></p-progressBar>
+                        </div>
+                        <div class="halls-grid">
+                            <ng-container *ngFor="let hall of halls">
+                                <div 
+                                    class="hall-card"
+                                    [class.selected]="isHallSelected(hall.id)"
+                                    (click)="toggleHallSelection(hall.id)">
+                                    <div class="hall-icon">
+                                        <i class="pi pi-home"></i>
+                                    </div>
+                                    <h4>{{ hall.name }}</h4>
+                                    <p class="hall-capacity">Capacity: {{ hall.capacity }}</p>
+                                    <div class="checkmark" *ngIf="isHallSelected(hall.id)">
+                                        <i class="pi pi-check"></i>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="navigate_buttons">
+                            <p-button icon="pi pi-arrow-left" label="Back" styleClass="back_button" (onClick)="navigate(2)"></p-button>
+                            <p-button icon="pi pi-arrow-right" label="Next" iconPos="right" styleClass="next_button" (onClick)="navigate(4)"></p-button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-step-panel>
+            <!-- Step 4: Invigilator Assignment -->
+            <p-step-panel [value]="4">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="card">
+                        <h3>Assign Invigilators</h3>
+                        <p class="text-muted">Assign staff to the halls selected in the previous step.</p>
+                        <div class="assignment-grid">
+                            <ng-container *ngFor="let hall of halls.slice(0,2)">
+                                <div class="hall-assignment-card">
+                                    <div class="hall-info">
+                                        <strong>{{ hall.name }}</strong>
+                                        <span>Capacity: {{ hall.capacity }}</span>
+                                    </div>
+                                    <div class="field">
+                                        <label>Select Invigilator</label>
+                                        <p-select 
+                                            [options]="invigilators" 
+                                            optionLabel="name" 
+                                            placeholder="Select Invigilator">
+                                        </p-select>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="navigate_buttons">
+                            <p-button icon="pi pi-arrow-left" label="Back" styleClass="back_button" (onClick)="navigate(3)"></p-button>
+                            <p-button label="Submit" icon="pi pi-check" styleClass="next_button"></p-button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-step-panel>
+        </p-step-panels>
+    </p-stepper>
+    </form>
+</div>

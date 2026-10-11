@@ -1,0 +1,104 @@
+<div class="page-wrapper">
+  <div class="main-card">
+    <div class="header-row">
+      <div class="header-text">
+        <h2>Student Management</h2>
+        <p>Manage student records and enrollment details</p>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <div class="search-box">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Search student..." (input)="dt.filterGlobal($any($event.target).value, 'contains')">
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-import"><i class="pi pi-file-import"></i> Import CSV</button>
+        <button class="btn-add" (click)="showAddDialog()">
+          <i class="pi pi-plus"></i> Add Student
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <p-table #dt [value]="students()" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'id']" styleClass="modern-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>STUDENT NAME</th>
+            <th>EMAIL ADDRESS</th>
+            <th class="text-center">DEPARTMENT</th>
+            <th class="text-center">ACTIONS</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-s let-i="rowIndex">
+          <tr>
+            <td class="id-col">{{s.id}}</td>
+            <td>{{s.name}}</td>
+            <td style="color: #64748b;">{{s.email}}</td>
+            <td class="text-center">{{s.department}}</td>
+            <td class="text-center">
+              <button class="action-btn edit" (click)="editStudent(s)"><i class="pi pi-pencil"></i></button>
+              <button class="action-btn delete" (click)="deleteStudent(s)"><i class="pi pi-trash"></i></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <p-dialog [header]="isEditing() ? 'Edit Student Details' : 'Register New Student'" [visible]="displayModal()" (visibleChange)="displayModal.set($event)" [modal]="true" [style]="{width: '700px'}" [draggable]="false" [resizable]="false">
+    <form [formGroup]="studentForm" (ngSubmit)="saveStudent()">
+      <div class="grid-form">
+        <div class="field">
+          <label>STUDENT NAME</label>
+          <input type="text" pInputText formControlName="studentName" placeholder="Enter your name">
+          <div class="error-wrapper">
+            <small class="error-text" *ngIf="studentForm.get('studentName')?.hasError('pattern') && studentForm.get('studentName')?.touched">
+              <i class="pi pi-exclamation-triangle"></i> Special characters are not allowed!
+            </small>
+            <small class="error-text" *ngIf="studentForm.get('studentName')?.hasError('minlength') && studentForm.get('studentName')?.touched">
+              <i class="pi pi-exclamation-triangle"></i> Name is required!
+            </small>
+          </div>
+        </div>
+        <div class="field">
+          <label>STUDENT ID</label>
+          <input type="text" pInputText formControlName="studentID" class="uppercase-hint" placeholder="E.G. S1001">
+          <div class="error-wrapper">
+            <small class="error-text" *ngIf="studentForm.get('studentID')?.hasError('pattern') && studentForm.get('studentID')?.touched">
+              <i class="pi pi-exclamation-triangle"></i> Small characters or special characters are not allowed!
+            </small>
+          </div>
+        </div>
+        <div class="field">
+          <label>EMAIL ADDRESS</label>
+          <input type="email" pInputText formControlName="studentEmail" placeholder="arunkumar@gmail.com">
+          <div class="error-wrapper">
+            <small class="error-text" *ngIf="studentForm.get('studentEmail')?.invalid && studentForm.get('studentEmail')?.touched">
+               Invalid email address!
+            </small>
+          </div>
+        </div>
+        <div class="field">
+          <label>DEPARTMENT</label>
+          <select formControlName="departmentCode" class="custom-select">
+            <option value="" disabled>Select Department</option>
+            <option *ngFor="let dept of departments()" [value]="dept.departmentCode">
+              {{dept.departmentCode}} - {{dept.name}}
+            </option>
+          </select>
+
+      </div>
+      <div class="mandatory-message">
+        *please fill all the mandatory fields or details
+      </div>
+      <div class="modal-footer">
+        <button type="button" pButton label="Cancel" class="p-button-text p-button-secondary" (click)="displayModal.set(false)"></button>
+        <button type="submit" pButton [label]="isEditing() ? 'Update Student' : 'Register Student'" class="p-button-blue" [disabled]="studentForm.invalid"></button>
+      </div>
+      
+    
+  
+</div>

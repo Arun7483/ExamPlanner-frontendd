@@ -1,0 +1,65 @@
+<div class="login-page">
+  <p-card class="login-card">
+    <h2>ExamPlanner Login</h2>
+
+    <p-message 
+      *ngIf="errorMessage()" 
+      severity="error" 
+      [text]="errorMessage()" 
+      class="w-full mb-3">
+    </p-message>
+
+    <form [formGroup]="adminForm" (ngSubmit)="login()">
+      <div class="field">
+        <label>User Role</label>
+        <p-select 
+          formControlName="userRole" 
+          [options]="roles" 
+          optionLabel="label" 
+          optionValue="value" 
+          placeholder="Select a Role" />
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input 
+          pInputText 
+          type="email" 
+          formControlName="email" 
+          class="full-width" />
+        <span *ngIf="adminForm.get('email')?.errors?.['required'] && adminForm.get('email')?.touched" class="error-text">
+          Email is required
+        </span>
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <p-password 
+          formControlName="password" 
+          [toggleMask]="true" 
+          [feedback]="false" 
+          class="full-width">
+        </p-password>
+        <small class="error" *ngIf="adminForm.get('password')?.touched && adminForm.get('password')?.errors?.['required']">
+          Password is required.
+        </small>
+        <small class="error" *ngIf="adminForm.get('password')?.touched && adminForm.get('password')?.errors?.['minlength']">
+          Password must be at least 8 characters.
+        </small>
+      </div>
+
+      <button 
+        pButton 
+        type="submit" 
+        label="Login" 
+        [loading]="isLoading()"
+        class="full-width primary-btn">
+      </button>
+
+      <div class="links">
+        <a routerLink="/forgot-password">Forgot Password?</a>
+        <a routerLink="/admin-signup-page">Go to Admin Signup</a>
+      </div>
+    </form>
+  </p-card>
+</div>

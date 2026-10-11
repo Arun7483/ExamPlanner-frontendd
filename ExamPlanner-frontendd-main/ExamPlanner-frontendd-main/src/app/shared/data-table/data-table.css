@@ -1,0 +1,124 @@
+/* THE MANAGEMENT CARD CONTAINER */
+.management-card { 
+  background: white; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+  border: 1px solid #e2e8f0; 
+  overflow: hidden; 
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 30px;
+}
+
+/* 1. Added space after the Title (H1) */
+.management-card h1 {
+  margin-bottom: 30px; 
+  color: #1e293b;
+  font-size: 24px;
+}
+
+/* HEADER & SEARCH SECTION */
+.search-section { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: 20px;
+  /* 2. Added space after the search/button row */
+  margin-bottom: 35px; 
+}
+
+.search-box { 
+  display: flex; 
+  align-items: center; 
+  background: #f1f5f9; 
+  padding: 0 15px; 
+  border-radius: 8px; 
+  flex: 1;           
+  max-width: 400px;  
+}
+
+.search-box input { 
+  border: none; 
+  background: transparent; 
+  padding: 12px; 
+  width: 100%; 
+  outline: none; 
+}
+
+/* 3. The Blue Add Button Styling */
+.btn-primary { 
+  background: #3b82f6; /* Bright blue color */
+  color: white; 
+  border: none;
+  /* 4. Added padding for a better look */
+  padding: 12px 24px; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #2563eb; /* Darker blue on hover */
+}
+
+/* TABLE STYLES */
+.modern-table { width: 100%; border-collapse: collapse; }
+
+.modern-table th { 
+  text-align: left; 
+  padding: 15px; 
+  background: #f8fafc; 
+  color: #64748b; 
+  font-size: 12px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+}
+
+.modern-table td { 
+  padding: 15px; 
+  border-bottom: 1px solid #f1f5f9; 
+  color: #334155; 
+}
+
+.id-col { font-weight: 700; color: #0f172a; }
+
+.sem-badge { 
+  background: #eff6ff; 
+  color: #2563eb; 
+  padding: 4px 12px; 
+  border-radius: 20px; 
+  font-size: 12px; 
+  font-weight: 600; 
+}
+
+/* ACTION BUTTONS */
+.action-btn { 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+  padding: 8px; 
+  font-size: 18px; 
+}
+.edit { color: green; }
+.delete { color: #ef4444; }
+
+/* PAGINATION */
+.pagination-container { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding-top: 25px; 
+  gap: 8px; 
+}
+
+.page-btn {
+  border: 1px solid #e2e8f0;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}

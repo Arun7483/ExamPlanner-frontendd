@@ -1,0 +1,96 @@
+<div class="dashboard">
+  <h2 class="title">Admin Dashboard</h2>
+
+  <div class="cards">
+    <div class="card"><span class="card-val">2,500</span><br><span class="card-label">Total Students</span></div>
+    <div class="card"><span class="card-val">15</span><br><span class="card-label">Upcoming Exams</span></div>
+    <div class="card"><span class="card-val">75</span><br><span class="card-label">Invigilators Available</span></div>
+    <div class="card"><span class="card-val">12</span><br><span class="card-label">Halls in Use</span></div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-box">
+      <h4>Students Distribution by Department</h4>
+      <div class="chart-flex">
+        <div class="pie-wrap">
+          <div class="pie-base" style="background: conic-gradient(#3498db 0% 35%, #2ecc71 35% 60%, #f1c40f 60% 80%, #e74c3c 80% 100%)"></div>
+          <span class="p-lab p1">35%</span><span class="p-lab p2">25%</span>
+          <span class="p-lab p3">20%</span><span class="p-lab p4">20%</span>
+        </div>
+        <div class="legend">
+          <div class="leg-item"><span class="dot" style="background:#3498db"></span> Science 35%</div>
+          <div class="leg-item"><span class="dot" style="background:#2ecc71"></span> Commerce 25%</div>
+          <div class="leg-item"><span class="dot" style="background:#f1c40f"></span> Arts 20%</div>
+          <div class="leg-item"><span class="dot" style="background:#e74c3c"></span> Others 20%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <h4>Upcoming Exams by Course</h4>
+      <div class="bar-chart-container">
+        <div class="y-axis-nums">
+          <span>8</span><span>6</span><span>4</span><span>2</span><span>0</span>
+        </div>
+        <div class="main-graph">
+          <div class="bg-lines">
+            <div class="thick-line"></div><div class="thick-line"></div>
+            <div class="thick-line"></div><div class="thick-line"></div>
+          </div>
+          <div class="bars-flex">
+            <div class="bar-col">
+              <div class="bar-body" style="height: 87.5%"><span class="bar-val">7</span></div>
+              <span class="course-name">Science</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-body" style="height: 50%"><span class="bar-val">4</span></div>
+              <span class="course-name">Commerce</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-body" style="height: 25%"><span class="bar-val">2</span></div>
+              <span class="course-name">Arts</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-body" style="height: 25%"><span class="bar-val">2</span></div>
+              <span class="course-name">Others</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <h4>Invigilators Availability</h4>
+      <div class="chart-flex">
+        <div class="donut-wrap">
+          <div class="donut-ring" style="background: conic-gradient(#3498db 0% 75%, #bdc3c7 75% 100%)"></div>
+          <span class="d-seg-val avail-pos">75%</span>
+          <span class="d-seg-val assign-pos">25%</span>
+          <div class="donut-hole">75%</div>
+        </div>
+        <div class="legend">
+          <div class="leg-item"><span class="dot" style="background:#3498db"></span> Available 75%</div>
+          <div class="leg-item"><span class="dot" style="background:#bdc3c7"></span> Assigned 25%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <h4>Halls Allocation Status</h4>
+      <div class="h-bar-area">
+        <div class="h-grid-bg">
+          <div></div><div></div><div></div><div></div><div></div>
+        </div>
+        <div class="h-row">
+          <label>In Use</label>
+          <div class="h-track"><div class="h-fill-green" style="width: 60%">12</div></div>
+        </div>
+        <div class="h-row">
+          <label>Available</label>
+          <div class="h-track"><div class="h-fill-gray" style="width: 40%">8</div></div>
+        </div>
+        <div class="h-axis"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span><span>20</span></div>
+      </div>
+    </div>
+  </div>
+</div>

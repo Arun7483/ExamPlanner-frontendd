@@ -1,0 +1,88 @@
+<div class="page-container">
+  <app-management-table
+    [title]="'Department Management'"
+    [columns]="tableColumns"
+    [data]="departments()"
+    (onAdd)="openAddModal()"
+    (onEdit)="handleEdit($event)"
+    (onDelete)="handleDelete($event)">
+  </app-management-table>
+</div>
+ 
+<div class="modal-overlay" *ngIf="showModal()">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2>{{ isEditing() ? 'Edit' : 'Add' }} Department</h2>
+    </div>
+   
+    <div class="error-msg" *ngIf="errorMessage()">
+      <i class="pi pi-exclamation-circle"></i> {{ errorMessage() }}
+    </div>
+ 
+    <div class="modal-body"><br>
+      <form [formGroup]="deptForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Department ID *</label>
+            <input formControlName="departmentId" placeholder="D001" type="text">
+            <small class="error" *ngIf="deptForm.get('departmentId')?.hasError('required') && deptForm.get('departmentId')?.touched">
+              Department ID is required
+            </small>
+            <small class="error" *ngIf="deptForm.get('departmentId')?.hasError('minlength') && deptForm.get('departmentId')?.touched">
+              Department ID must be at least 2 characters
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Short Code *</label>
+            <input formControlName="departmentCode" placeholder="CS" type="text">
+            <small class="error" *ngIf="deptForm.get('departmentCode')?.hasError('required') && deptForm.get('departmentCode')?.touched">
+              Code is required
+            </small>
+            <small class="error" *ngIf="deptForm.get('departmentCode')?.hasError('maxlength') && deptForm.get('departmentCode')?.touched">
+              Code must not exceed 5 characters
+            </small>
+          </div>
+
+          <div class="form-group full">
+            <label>Department Name *</label>
+            <input formControlName="name" placeholder="Computer Science" type="text">
+            <small class="error" *ngIf="deptForm.get('name')?.hasError('required') && deptForm.get('name')?.touched">
+              Department Name is required
+            </small>
+            <small class="error" *ngIf="deptForm.get('name')?.hasError('minlength') && deptForm.get('name')?.touched">
+              Department Name must be at least 3 characters
+            </small>
+          </div>
+
+          <div class="form-group full">
+            <label>HOD Name *</label>
+            <input formControlName="headOfDepartment" placeholder="Dr. John Doe" type="text">
+            <small class="error" *ngIf="deptForm.get('headOfDepartment')?.hasError('required') && deptForm.get('headOfDepartment')?.touched">
+              HOD Name is required
+            </small>
+            <small class="error" *ngIf="deptForm.get('headOfDepartment')?.hasError('minlength') && deptForm.get('headOfDepartment')?.touched">
+              HOD Name must be at least 3 characters
+            </small>
+          </div>
+
+          <div class="form-group full">
+            <label>Number of Semesters *</label>
+            <select formControlName="totalSemesters" class="custom-select">
+              <option *ngFor="let s of [1,2,3,4,5,6,7,8]" [value]="s">{{ s }} Semesters</option>
+            </select>
+            <small class="error" *ngIf="deptForm.get('totalSemesters')?.hasError('required') && deptForm.get('totalSemesters')?.touched">
+              Number of Semesters is required
+            </small>
+          </div>
+        </div>
+      </form>
+    </div>
+ 
+    <div class="modal-footer">
+      <button class="btn-ghost" (click)="closeModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="saveDepartment()" [disabled]="deptForm.invalid">Save Department</button>
+    </div>
+  </div>
+</div>
+ 

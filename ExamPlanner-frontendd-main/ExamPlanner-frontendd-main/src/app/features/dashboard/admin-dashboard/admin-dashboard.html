@@ -1,0 +1,98 @@
+<div class="layout-wrapper">
+    <header class="header">
+            <div class="left-header">
+                <p-button icon="pi pi-bars" (onClick)="toggleSideBar()" styleClass="mobile-menu-btn" [text]="true" [rounded]="true"/>
+                <label class="title">Admin Dashboard</label>
+            </div>
+            <div class="action_buttons">
+                <p-button icon="pi pi-user" [rounded]="true" label="User" [text]="true" styleClass="user_profile_button" (onClick)="toggleProfilePage()"/>
+                <p-button icon="pi pi-sign-out" [rounded]="true" label= "Log Out" [text]="true" styleClass="logout_button" (click)="AdminLogout()"/>
+            </div>
+        </header>
+    <div class="lower-container">
+        <aside class="desktop-sidebar">
+            <ng-container *ngTemplateOutlet="menuContent"></ng-container>
+        </aside>
+        <main class="page-body">
+            <router-outlet></router-outlet>
+        </main>
+
+    </div>
+
+    
+    <p-drawer [(visible)]="sidebarVisible" position="left" [modal]="true">
+        <ng-container *ngTemplateOutlet="menuContent"></ng-container>
+    </p-drawer>
+    <p-drawer [(visible)]="profilePageVisible" position="right" [modal]="true">
+        <ng-container *ngTemplateOutlet="profilepage"></ng-container>
+    </p-drawer>
+</div>
+
+<!--ng-template #profilepage>
+    <div class="profile-header">
+        <i class="pi pi-user"></i>
+        <h4>Admin</h4>
+        <p>{{profile.email}}</p>
+    </div>
+</ng-template-->
+
+
+<ng-template #profilepage>
+  <!-- <section class="profile-card" aria-label="User profile">
+    <div class="profile-cover"></div>
+
+    <div class="profile-main">
+      <div class="avatar">
+        <i class="pi pi-user"></i>
+      </div>
+
+      <div class="identity">
+        <h2 class="name">{{ profile?.name || 'Guest User' }}</h2>
+        <span class="role-badge">
+          <i class="pi pi-shield"></i>
+          {{ profile?.role || 'ADMIN' }}
+        </span>
+        <p class="email">
+          <i class="pi pi-envelope"></i>
+          {{ profile?.email || 'guest@example.com' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="label">Status</span>
+        <span class="value online">
+          <i class="pi pi-circle-on"></i> Active
+        </span>
+      </div>
+     
+    </div>
+
+    
+    <div class="actions">
+      <p-button class="btn primary" severity="info">
+        <i class="pi pi-pencil" severity="help"></i> Edit Profile
+      </p-button>
+      <p-button  class="btn danger outline" severity="info">
+        <i class="pi pi-sign-out"></i> Logout
+      </p-button>
+    </div>
+  </section> -->
+  <app-profile-card></app-profile-card>
+</ng-template>
+
+
+
+<ng-template #menuContent>
+    <nav class="sidebar-nav">
+        <p-button label="Home" icon="pi pi-home" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['home']"/>
+        <p-button label="Departments" icon="pi pi-building" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['department']"/>
+        <p-button label="Courses" icon="pi pi-book" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['courses']"/>
+        <p-button label="Students" icon="pi pi-users" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['students']"/>
+        <p-button label="Invigilators" icon="pi pi-eye" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['invigilator']"/>
+        <p-button label="Exam Schedules" icon="pi pi-calendar" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['schedules']"/>
+        <p-button label="Hall Allocation" icon="pi pi-map-marker" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['halls']"/> 
+        <p-button label="Analytics & Reports" icon="pi pi-chart-bar" [text]="true" styleClass="nav-link" (onClick)="closeSideBar()" [routerLink]="['analytics']"/>
+    </nav>
+</ng-template>

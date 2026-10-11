@@ -1,0 +1,84 @@
+<div class="box1">
+    <nav></nav>
+
+    
+    <div class="card">
+        <form class="form" [formGroup]="formdata" (ngSubmit)="SignupAdmin()">
+            <div class="formControl">
+                <label>Register As</label>
+                <p-select 
+                    [options]="roles" 
+                    formControlName="role" 
+                    optionLabel="label" 
+                    optionValue="value"
+                    placeholder="Select your role"
+                    [style]="{'width':'100%'}">
+                </p-select>
+                <small class="error-text" *ngIf="formdata.get('role')?.errors?.['required'] && formdata.get('role')?.touched">
+                    Role selection is required
+                </small>
+            </div>
+            <div class="formControl">
+                <label>Full Name / College Name</label>
+                <input pInputText type="text" name="name" formControlName="name" placeholder="Enter name">
+                <small class="error-text" *ngIf="formdata.get('name')?.errors?.['required'] && formdata.get('name')?.touched">
+                    Name is required
+                </small>
+            </div>
+
+            <div class="formControl">
+                <label>Email</label>
+                <input pInputText type="email" name="email" formControlName="email" placeholder="Enter email">
+                <small class="error-text" *ngIf="formdata.get('email')?.errors?.['required'] && formdata.get('email')?.touched">
+                    Email is required
+                </small>
+                <small class="error-text" *ngIf="formdata.get('email')?.errors?.['email'] && formdata.get('email')?.touched">
+                    Email is not valid
+                </small>
+            </div>
+
+
+            <div class="passwordFields">
+                <div class="formControl">
+                    <label for="password">Password</label>
+                    <p-password 
+                        id="password" 
+                        formControlName="password" 
+                        [toggleMask]="true" 
+                        [feedback]="false"
+                        placeholder="Min 8 characters">
+                    </p-password>
+                    <small class="error-text" *ngIf="formdata.get('password')?.errors?.['required'] && formdata.get('password')?.touched">
+                        Password is required
+                    </small>
+                    <small class="error-text" *ngIf="formdata.get('password')?.errors?.['minlength'] && formdata.get('password')?.touched">
+                        Password should be at least 8 letters
+                    </small>
+                </div>
+
+                <div class="formControl">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <p-password 
+                        id="confirmPassword" 
+                        formControlName="confirmPassword" 
+                        [toggleMask]="false" 
+                        [feedback]="false"
+                        placeholder="Re-enter password">
+                    </p-password>
+                    <small class="error-text" *ngIf="formdata.hasError('passwordMismatch') && formdata.get('confirmPassword')?.touched">
+                        Passwords do not match
+                    </small>
+                </div>
+            </div>
+
+            <button class="button" type="submit" [disabled]="formdata.invalid">Register Account</button>
+            
+            <div class="redirect_text">
+                <p>
+                    Account already exists?
+                    <a [routerLink]="['/login']"> Login here</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

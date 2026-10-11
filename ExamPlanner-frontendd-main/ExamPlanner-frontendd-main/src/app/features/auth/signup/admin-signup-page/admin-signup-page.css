@@ -1,0 +1,201 @@
+/* Responsive, polished styles for Admin Registration page */
+
+:root{
+    /* fallback palette if project variables are missing */
+    --primary-color: #2b7cff;
+    --secondary-color: #24324a;
+    --error-color: #d9534f;
+    --card-bg: #ffffff;
+    --muted: #6b7280;
+    --border-radius: 10px;
+    --input-border: #d3d6db;
+}
+
+/* page container */
+.box1 {
+    background: rgb(81, 81, 146);
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 32px 16px;
+    box-sizing: border-box;
+}
+
+/* card */
+.card {
+    padding: 28px;
+    border-radius: var(--border-radius);
+    background-color: rgb(221, 221, 240);
+    width: 100%;
+    max-width: 540px;
+    box-shadow: 0 8px 24px rgba(12, 21, 40, 0.08);
+    box-sizing: border-box;
+}
+
+/* form layout */
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* Controls */
+.formControl {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 6px;
+}
+
+/* labels */
+label {
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Inputs (native and PrimeNG) */
+input[type="text"],
+input[type="email"],
+.p-inputtext,
+:host ::ng-deep .p-password input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    background: #fff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* focused state */
+input:focus,
+.p-inputtext:focus,
+:host ::ng-deep .p-password input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 14px rgba(43, 124, 255, 0.12);
+}
+
+/* Password component wrapper sizing */
+.p-password, .p-password input {
+    width: 100%;
+}
+
+/* Password fields group */
+.passwordFields {
+    display: flex;
+    gap: 12px;
+    flex-direction: row;
+    width: 100%;
+}
+
+/* make each field expand equally */
+.passwordFields .formControl {
+    flex: 1;
+}
+
+/* error text */
+.error-text {
+    color: var(--error-color);
+    padding: 4px 2px 0;
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+/* submit button */
+.button {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    border: none;
+    color: #fff;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    transition: transform 0.06s ease, box-shadow 0.12s ease;
+    box-shadow: 0 6px 18px rgba(43,124,255,0.14);
+}
+
+.button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(43,124,255,0.18);
+}
+
+.button:disabled {
+    background-color: rgba(0,0,0,0.18);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* small redirect text */
+.redirect_text {
+    padding-top: 10px;
+    text-align: left;
+    width: 100%;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* utility spacing & responsiveness */
+@media (max-width: 720px) {
+    .card {
+        padding: 20px;
+        max-width: 420px;
+    }
+
+    h2 {
+        font-size: 1.35rem;
+    }
+
+    .passwordFields {
+        flex-direction: column;
+    }
+
+    .passwordFields .formControl {
+        width: 100%;
+    }
+
+    .box1 {
+        padding: 24px 12px;
+    }
+}
+
+@media (max-width: 420px) {
+    .card {
+        padding: 18px;
+    }
+
+    label {
+        font-size: 0.92rem;
+    }
+
+    .button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+
+/* Accessibility helpers */
+input[aria-invalid="true"],
+.p-inputtext[aria-invalid="true"],
+:host ::ng-deep .p-password input[aria-invalid="true"] {
+    border-color: var(--error-color);
+    box-shadow: 0 4px 12px rgba(217,83,79,0.08);
+}
+
+/* keep existing form rule intact but consolidated */
+form {
+    align-items: center;
+}
+
+/* end of file */
+
