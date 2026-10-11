@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal, computed } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { apiConfig } from '../../config/api.config';
 
 export interface Department {
   departmentId: string;   
@@ -29,8 +30,8 @@ export interface Course {
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
-  private baseUrl = "http://localhost:8090/api/courses";
-  private deptUrl = "http://localhost:8090/api/departments"; 
+  private baseUrl = `${apiConfig.apiBaseUrl}/api/courses`;
+  private deptUrl = `${apiConfig.apiBaseUrl}/api/departments`;
 
   // Signals
   private coursesSignal = signal<Course[]>([]);

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { apiConfig } from '../../../../../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // Ensure this matches your Spring Boot port (default is 8080 or 8090)
-  private baseUrl = 'http://localhost:8090/api/auth';
+  private baseUrl = `${apiConfig.apiBaseUrl}/api/auth`;
 
   constructor(private http: HttpClient) { }
 

@@ -2,6 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, finalize } from 'rxjs/operators';
+import { apiConfig } from '../../config/api.config';
 
 
 
@@ -80,7 +81,7 @@ export interface AssignHallsDTO {
   providedIn: 'root',
 })
 export class ExamScheduleService {
-  private baseUrl = 'http://localhost:8090/api/schedules';
+  private baseUrl = `${apiConfig.apiBaseUrl}/api/schedules`;
 
   private schedulesSignal = signal<ExamSchedule[]>([]);
   public schedules = computed(() => this.schedulesSignal());

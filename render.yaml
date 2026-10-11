@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: examplanner-backend
+    runtime: docker
+    dockerfilePath: ./Backend-ExamPlanner-main/Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MS
+        value: 86400000
+      - key: CORS_ALLOWED_ORIGIN
+        value: https://examplanner-frontend.onrender.com
+
+  - type: web
+    name: examplanner-frontend
+    runtime: node
+    rootDir: ./ExamPlanner-frontendd-main
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run serve:ssr:ExamPlanner
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: API_URL
+        value: https://examplanner-backend.onrender.com

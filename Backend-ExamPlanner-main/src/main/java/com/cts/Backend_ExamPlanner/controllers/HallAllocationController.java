@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/halls")
-@CrossOrigin(origins = "http://localhost:4200") // adjust if needed
+@CrossOrigin(origins = "${app.cors.allowed-origin:http://localhost:4200}")
 class HallAllocationController {
 
     private final HallAllocationService service;

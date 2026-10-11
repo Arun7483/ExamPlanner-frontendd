@@ -2,6 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, finalize } from 'rxjs/operators';
+import { apiConfig } from '../../config/api.config';
 
 export interface InvigilatorRequestDTO {
   invigilatorId: string;
@@ -58,8 +59,8 @@ export interface Department {
 
 @Injectable({ providedIn: 'root' })
 export class InvigilatorService {
-  private readonly baseUrl = 'http://localhost:8090/api/invigilators';
-  private readonly deptUrl = 'http://localhost:8090/api/departments';
+  private readonly baseUrl = `${apiConfig.apiBaseUrl}/api/invigilators`;
+  private readonly deptUrl = `${apiConfig.apiBaseUrl}/api/departments`;
 
   // Optional: keep departments in a signal cache
   private readonly departmentsSignal = signal<Department[]>([]);

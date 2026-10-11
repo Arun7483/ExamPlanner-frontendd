@@ -2,6 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { apiConfig } from '../../config/api.config';
 
 export interface HallAllocation {
   hallId: string;
@@ -17,7 +18,7 @@ function toYesNo(value: unknown): HallAllocation['availability'] {
 
 @Injectable({ providedIn: 'root' })
 export class HallService {
-  private baseUrl = 'http://localhost:8090/api/halls';
+  private baseUrl = `${apiConfig.apiBaseUrl}/api/halls`;
 
   // Signals cache
   private hallsSignal = signal<HallAllocation[]>([]);

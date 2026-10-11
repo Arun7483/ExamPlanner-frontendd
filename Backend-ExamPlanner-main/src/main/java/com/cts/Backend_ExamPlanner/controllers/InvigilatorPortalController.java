@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/invigilators/upcoming-exams")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${app.cors.allowed-origin:http://localhost:4200}")
 public class InvigilatorPortalController {
 
     private final UpcomingExamService service;

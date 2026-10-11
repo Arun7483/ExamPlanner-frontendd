@@ -2,6 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { apiConfig } from '../../config/api.config';
 
 export interface Department {
   departmentId: string;
@@ -15,7 +16,7 @@ export interface Department {
   providedIn: 'root'
 })
 export class DepartmentService {
-  private baseUrl = 'http://localhost:8090/api/departments';
+  private baseUrl = `${apiConfig.apiBaseUrl}/api/departments`;
 
   // Signal to store departments list
   private departmentsSignal = signal<Department[]>([]);

@@ -8,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${app.cors.allowed-origin:http://localhost:4200}")
 @Validated
 public class AuthController {
 
@@ -31,8 +33,11 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // This MUST be exactly the same as in your JwtFilter
-    private final String SECRET_KEY = "ParvathiArunKanhaiyaRuthvikBhattuPranavaShivani";
+    @Value("${app.jwt.secret:ParvathiArunKanhaiyaRuthvikBhattuPranavaShivani}")
+    private String secretKey;
+
+    @Value("${app.jwt.expiration-ms:86400000}")
+    private long jwtExpirationMs;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserRegistrationDTO dto) {
@@ -70,8 +75,8 @@ public class AuthController {
                             .setSubject(user.getEmail())
                             .claim("role", user.getRole())
                             .setIssuedAt(new Date())
-                            .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
-                            .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()), SignatureAlgorithm.HS256)
+                            .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                            .signWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
                             .compact();
 
                     // 4. Return user details and token

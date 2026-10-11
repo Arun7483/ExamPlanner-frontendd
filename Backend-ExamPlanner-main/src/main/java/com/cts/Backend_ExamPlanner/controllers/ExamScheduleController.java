@@ -23,7 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${app.cors.allowed-origin:http://localhost:4200}")
 @RestController
 @RequestMapping("/api/schedules")
 public class ExamScheduleController {
